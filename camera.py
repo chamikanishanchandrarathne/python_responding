@@ -162,7 +162,7 @@ class VideoCamera(object):
                 # ********Head Movement Position**********
 
                 text3 = 'Head Movement: ' + str(offset)
-                cv2.putText(frame, text3, (25, 75), self.font, 0.5, (0, 0, 255), 1)
+                cv2.putText(frame, text3, (25, 50), self.font, 0.5, (0, 0, 255), 1)
 
         ret, jpeg = cv2.imencode('.jpg', frame)
         return jpeg.tobytes()
