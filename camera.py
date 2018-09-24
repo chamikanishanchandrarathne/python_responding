@@ -148,8 +148,6 @@ class VideoCamera(object):
                 # BACKGROUND RECTANGLE
                 recB = (edgeTL, edgeTR, edgeBR, edgeBL)
 
-                end = format(timer(), '.2f')
-
 
                 # DRAW FACIAL LANDMARK COORDINATES PINK
                 for (x, y) in shape:
