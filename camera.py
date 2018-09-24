@@ -15,13 +15,11 @@ shape_predictor = dlib.shape_predictor(
 
 class VideoCamera(object):
     def __init__(self):
-        # Using OpenCV to capture from device 0. If you have trouble capturing
-        # from a webcam, comment the line below out and use a video file
-        # instead.
+
         self.font = cv2.FONT_HERSHEY_SIMPLEX
         self.video = cv2.VideoCapture(0)
-        # If you decide to use video.mp4, you must have this file in the folder
-        # as the main.py.
+        # cap = cv2.VideoCapture("videocut1.mp4")
+
         # self.video = cv2.VideoCapture('video.mp4')
 
     def __del__(self):
@@ -32,14 +30,13 @@ class VideoCamera(object):
     def get_frame(self):
         success, image = self.video.read()
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream.
+
         ret, jpeg = cv2.imencode('.jpg', image)
         self.cap_func()
         return jpeg.tobytes()
 
-    # cap = cv2.VideoCapture("videocut1.mp4")
-    #
+    
+    
     # # GET INTERSECTION BETWEEN TWO LINES WITH COORDINATES ([x1,x2],[x2,y2])([x3,y3][x4,y4])
     def get_intersection(self, x1, y1, x2, y2, x3, y3, x4, y4):
         denom = float(y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1)
@@ -49,19 +46,6 @@ class VideoCamera(object):
         x = x1 + ua * (x2 - x1)
         y = y1 + ua * (y2 - y1)
         return (int(x), int(y))
-
-    def scale_faceangle(self, points, scale=1, offset=(0, 0)):
-        mid = numpy.mean(points, axis=0)
-        pts = []
-        for i in range(len(points)):
-            pts.append(
-                tuple(
-                    numpy.array(
-                        (numpy.subtract(
-                            numpy.add(numpy.subtract(points[i], mid) * scale, mid),
-                            offset)),
-                        dtype=int)))
-        return pts
 
     def shape_to_np(self, shape):
         # initialize the list of (x, y)-coordinates
@@ -166,9 +150,6 @@ class VideoCamera(object):
 
                 end = format(timer(), '.2f')
 
-                # Get Respond time
-                restim = 'Respond Time: ' + str(end) + ' Seconds'
-                cv2.putText(frame, restim, (25, 50), self.font, 0.5, (0, 0, 255), 1)
 
                 # DRAW FACIAL LANDMARK COORDINATES PINK
                 for (x, y) in shape:
